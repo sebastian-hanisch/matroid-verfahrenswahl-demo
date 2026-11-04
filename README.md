@@ -14,10 +14,10 @@ Wer eine Auswahlaufgabe mit Nebenbedingungen löst, wählt ein Verfahren nach de
 ## Befunde und Korrekturen gegenüber dem Plan
 
 - **Die Vereinigung ist kein eigener Ast.** Sie ist selbst ein Matroid (Stück 9): Wald ∨ Wald hat bei **60 von 60** Instanzen Greedy = Optimum; der Matroid-Test antwortet „ja“, nur das Orakel der Vereinigung kostet mehr Aufrufe.
-- **Der Schnitt ist am Orakel nicht erkennbar.** Der Test sagt nur „kein Matroid“; die Zerlegung in zwei Matroide wird mitgeliefert (ob sie sich aus dem Orakel finden lässt, ist nicht untersucht).
+- **Der Matroid-Test erkennt den Schnitt nicht.** Er sagt nur „kein Matroid“; die Zerlegung in zwei Matroide wird mitgeliefert, ob sie sich aus dem Orakel finden lässt, ist nicht untersucht. Auch die Einordnung „kein Schnitt“ (Konflikte, Budget, Paarung) beruht auf der Erzeugung, nicht auf einer Prüfung.
 - **Online und lernend sind Eigenschaften der Informationslage,** nicht der Familie: Sie stehen vor der Familienfrage. Die Zahlen aus Stück 13 und 14 sind dort gemessen und hier nur zitiert.
-- **Das Prüfen ist unsymmetrisch teuer:** Gegenbeispiele sind billig, die Bestätigung kostet alle 2^n Mengen.
-- **„Sonst?“ ist nicht leer:** Greedy erreicht dort im Mittel 0,929 bis 0,981 des Optimums, im schlechtesten Fall 0,612.
+- **Das Prüfen ist unsymmetrisch teuer:** Gegenbeispiele sind bei den gemessenen Familien billig, die vollständige Prüfung der Demo kostet alle 2^n Aufrufe; ob es mit weniger geht, ist nicht untersucht.
+- **„Sonst?“ ist nicht leer:** Bei Konflikten, Budget und Paarung erreicht Greedy in diesen Messreihen im Mittel 0,929 bis 0,961 des Optimums; einzelne Instanzen liegen deutlich darunter (kleinster beobachteter Quotient der 60er-Reihen 0,612, in anderen Ziehungen bis etwa 0,48).
 - **Zahlen wie in Phase 0** (gleiche Seeds und Erzeuger). Das Optimum der Schnitt-Familien kommt aus der Aufzählung (Platzhalter für das Schnittverfahren aus Stück 7 und 8).
 - **Port 9357;** Repo `matroid-verfahrenswahl-demo`, Präfix `mvw_`; nur Streamlit, Plotly und fpdf2 zur Laufzeit (reine Python-Arithmetik, kein numpy).
 
@@ -48,13 +48,15 @@ Alle Zahlen stehen in `tests/test_claims.py` und werden dort mit den Funktionen 
 | Budget (Seed 3) | kein Schnitt | 272 | ja | 51 | 92 |
 | Stiller Fehler (Zuordnung, Seed 5) | Schnitt | 319 | nein | 81 | 106 |
 
+Das Budget wird erst nach einer vollständigen Ziehung (rund 2n Aufrufe) geprüft, daher Werte über 300.
+
 | Frage | Befund |
 |---|---|
-| **Experiment 1: Prüfkosten** (n = 8, 10, 12, 14; 30 Instanzen je Familie und n; Deckel 20 000 Aufrufe) | Größentest findet Gegenbeispiele im Median nach **16 bis 182** Orakelaufrufen, der Austauschtest nach **74 bis 355**; beide Tests zusammen ließen **6** von 600 Instanzen unentdeckt. Vollständige Prüfung: **1 024** Aufrufe bei n = 10, **1 048 576** bei n = 20, **1 073 741 824** bei n = 30. |
-| **Experiment 2: Stille Fehler** (60 Instanzen je Familie, n = 10, Seed 17) | Von 298 Nicht-Matroiden bestehen den gezogenen Test bei Budget B = 30 / 100 / 300 / 1 000 / 3 000: **275 / 210 / 86 / 9 / 1**; mittlerer Greedy-Verlust der Durchgelassenen **4,1 % / 3,9 % / 3,7 % / 1,5 % / 0,0 %**; schlechtester Quotient bei B = 30 **0,612**. Falsch gemeldete Matroide: **0 von 300** bei B = 1 000. |
-| **Experiment 3: Die Regel** (600 Instanzen) | Immer Greedy verliert im Mittel **2,02 %** des Optimums; die Regel „erst testen, dann wählen“ bei Budget 100 / 300 / 1 000 **1,35 % / 0,53 % / 0,02 %** (falsch durchgelassen **210 / 86 / 9**). |
-| **Experiment 4: Submodularität** (n = 10, 60 je Art) | Abdeckung und Budget-Abdeckung: **0 von 60** verletzt, **0** Fehlalarme. Abdeckung mit Paarbonus fällt im Mittel nach **12,8** Aufrufen auf, Quadrat der Größe nach **4**, Zufallstabelle nach **8,7**. Ein einziges Paar mit Bonus 1: **49 von 60** überhaupt verletzt; gefunden **41 von 49** bei 400, **49 von 49** bei 1 000 Aufrufen (Mittel **237,1**). |
-| **Experiment 5: Greedy und Zertifikat** | Bei allen fünf Matroid-Familien Greedy = Optimum **60 von 60**. Kleinste Quotienten: Zuordnung **0,796**, Regenbogen-Wald **0,733**, Konflikte **0,714**, Budget **0,612**, Paarung **0,667**; Schnitt zweier Matroide nie unter **0,733** (Schranke ½). Aus jedem der **289** gefundenen Gegenbeispiele (B = 1 000) entstehen Gewichte, bei denen Greedy scheitert: **289 von 289**. |
+| **Experiment 1: Prüfkosten** (n = 8, 10, 12, 14; 30 Instanzen je Familie und n; Deckel 20 000 Aufrufe) | Größentest findet Gegenbeispiele im Median nach **16 bis 182** Orakelaufrufen, der Austauschtest nach **74 bis 355** (Median je Zelle; mit anderen Seeds etwa 16 bis 63 und 102 bis 367); beide Tests zusammen ließen **6** von 600 Instanzen unentdeckt. Alle 6 sind (Aufzählung aller Paare unabhängiger Mengen) zufällig doch Matroide, es blieb kein Nicht-Matroid unentdeckt. Vollständige Prüfung: **1 024** Aufrufe bei n = 10, **1 048 576** bei n = 20, **1 073 741 824** bei n = 30. |
+| **Experiment 2: Stille Fehler** (60 Instanzen je Familie, n = 10, Seed 17) | Von 298 Nicht-Matroiden bestehen den gezogenen Test bei Budget B = 30 / 100 / 300 / 1 000 / 3 000: **275 / 210 / 86 / 9 / 1**; mittlerer Greedy-Verlust der Durchgelassenen **4,1 % / 3,9 % / 3,7 % / 1,5 % / 0,0 %**; schlechtester Quotient bei B = 30 **0,612** (Minimum aus den durchgelassenen Instanzen). Mit anderen Seeds schwanken die Anzahlen um etwa ±10; der Verlust 0,0 % bei B = 3 000 beruht auf einer einzigen Instanz. Falsch gemeldete Matroide: **0 von 300** bei B = 1 000. |
+| **Experiment 3: Die Regel** (600 Instanzen) | Immer Greedy verliert im Mittel **2,02 %** des Optimums (gemittelt über fünf Matroid- und fünf Nicht-Matroid-Familien; bei den Nicht-Matroiden allein etwa 4 %); die Regel „erst testen, dann wählen“ bei Budget 100 / 300 / 1 000 **1,35 % / 0,53 % / 0,02 %** (falsch durchgelassen **210 / 86 / 9**), gezählt ist nur der Wert, ohne Rechenkosten für das exakte Lösen erkannter Nicht-Matroide und für den Test; mit anderen Seeds schwanken die Werte (Regel etwa 1,3 / 0,5 / 0,05 %). |
+| **Experiment 4: Submodularität** (n = 10, 60 je Art) | Abdeckung und Budget-Abdeckung: **0 von 60** verletzt, **0** Fehlalarme. Abdeckung mit Paarbonus fällt im Mittel nach **12,8** Aufrufen auf, Quadrat der Größe nach **4**, Zufallstabelle nach **8,7**. Ein einziges Paar mit Bonus 1: **49 von 60** überhaupt verletzt; gefunden **41 von 49** bei 400, **49 von 49** bei 1 000 Aufrufen (Mittel **237,1**); in drei untersuchten Seeds waren bei 1 000 Aufrufen alle gefunden. Bei diesem einen schwachen Paar ist der Test mit rund 240 Aufrufen nicht billiger als der Austauschtest. |
+| **Experiment 5: Greedy und Zertifikat** | Bei allen fünf Matroid-Familien Greedy = Optimum **60 von 60**. Kleinste beobachtete Quotienten (Stichprobenminima aus je 60 Instanzen): Zuordnung **0,796**, Regenbogen-Wald **0,733**, Konflikte **0,714**, Budget **0,612**, Paarung **0,667**; Schnitt zweier Matroide in diesen 60 Instanzen je Familie nicht unter **0,733** (bewiesene Schranke ½; in größeren Stichproben bis etwa 0,6). Aus jedem der **289** gefundenen Gegenbeispiele (B = 1 000) entstehen Gewichte, bei denen Greedy scheitert: **289 von 289**. |
 | **Spielwiese** (Zuordnung mit drei Leitungen) | Greedy nimmt Leitung 1 und erreicht **1**, das Optimum {2, 3} hat **2** (Quotient 0,5, scharf). Gegenbeispiel A = {1}, B = {2, 3}; Gewichte 3 / 2 / 2: Greedy **3**, B **4**. |
 
 ## Ehrliche Grenzen
@@ -63,7 +65,7 @@ Alle Zahlen stehen in `tests/test_claims.py` und werden dort mit den Funktionen 
 - **Das Optimum steht für das Schnittverfahren.** Der Aufzählungswert ersetzt den Wert des Verfahrens aus Stück 7 und 8; dort gemessen, hier nicht gegengeprüft.
 - **Die Zerlegung in zwei Matroide wird mitgeliefert;** ob sie sich aus dem Orakel finden lässt, ist nicht untersucht.
 - **Online und lernend sind Wissen,** nicht geprüft; die Zahlen aus Stück 13 und 14 sind zitiert, nicht neu gemessen.
-- **Gezogene Tests beweisen nichts,** Bestätigen geht nur vollständig (2^n Aufrufe).
+- **Gezogene Tests beweisen nichts;** die vollständige Prüfung der Demo kostet 2^n Aufrufe, ob es mit weniger geht, ist nicht untersucht.
 - **Submodularität an wenigen Arten gemessen;** schwache Verletzungen brauchen viele Aufrufe.
 - **Härte (NP-Schwere) nicht gemessen** und nicht nachgeschlagen.
 - **Beispiele zufällig und klein,** mit festen Seeds.

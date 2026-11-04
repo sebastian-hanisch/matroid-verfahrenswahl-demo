@@ -119,7 +119,7 @@ def test_experiment_verdicts_on_handmade_data():
     rows5 = [{"kind": k, "matroids": 60 if k in C.MATROID_KINDS else 0, "equal": 60 if k in C.MATROID_KINDS else 40, "mean": 1.0 if k in C.MATROID_KINDS else 0.95, "min": 1.0 if k in C.MATROID_KINDS else 0.7} for k in C.SERIES_KINDS]
     res5 = {"rows": rows5, "cert_total": 289, "cert_ok": 289, "cert_valid": 289, "inter_min": 0.733, "count": 60}
     kind, text = ev.verdict_ex5(res5)
-    assert kind == "info" and "(**60 von 60** je Familie)" in text and "nie unter **0,733**" in text and "**289 von 289**" in text
+    assert kind == "info" and "(**60 von 60** je Familie)" in text and "in dieser Stichprobe nicht unter **0,733**" in text and "**289 von 289**" in text
     assert ev.verdict_ex5({**res5, "cert_ok": 288})[0] == "error" and ev.verdict_ex5({**res5, "inter_min": 0.4})[0] == "error"
 
 

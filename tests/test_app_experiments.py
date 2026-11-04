@@ -87,7 +87,7 @@ def test_on_demand_series_appear_and_stay():
     at.button(key="ex3_run").click().run()
     assert not at.exception and any(t.startswith("Über 600 Instanzen aus zehn Familien verliert") for t in _texts(at))
     at.button(key="ex4_run").click().run()
-    assert not at.exception and any(t.startswith("Der Test auf Submodularität ist billiger als der auf das Matroid") for t in _texts(at))
+    assert not at.exception and any(t.startswith("Bei diesen Funktionen ist der Test auf Submodularität billiger als der auf das Matroid") for t in _texts(at))
     at.button(key="ex5_run").click().run()
     assert not at.exception and any(t.startswith("Bei allen fünf Matroid-Familien erreicht Greedy das Optimum") for t in _texts(at))
     _click_preset(at, "Budget")

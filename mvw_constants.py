@@ -48,8 +48,8 @@ FULL_CHECK_NS = (10, 20, 30)
 
 # Literatur dieser Reihe (nicht neu gemessen; Quelle: Stück 13 und 14)
 TAFEL = (
-    ("Stück 13 (Sekretär)", "Stichprobenregel behält im Wald mit wachsendem Rang 0,46 bis 0,59 des Optimums; erst-kommt-erst-bekommt fällt bei schiefen Gewichten auf 0,063."),
-    ("Stück 14 (Bandit)", "Optimistisches Greedy: das Bedauern wächst erst bei großen T logarithmisch; mit Konstante 0,25 statt 1,5 sinkt es bei Lücke 0,2 und T = 2 000 von 222 auf 53."),
+    ("Stück 13 (Sekretär)", "Die wachsende Stichprobe behält im Wald bei Rang 4 / 7 / 11 / 15 mit verdoppelnden Nutzen 0,544 / 0,500 / 0,527 / 0,554 des Optimums (gleichverteilt 0,704 bis 0,780); erst kommt, erst bekommt fällt bei aufsteigender Reihenfolge auf 0,063 (Kardinalität) und 0,119 (Wald)."),
+    ("Stück 14 (Bandit)", "Optimistisches Greedy: das Bedauern wächst erst bei großen T logarithmisch; mit Konstante 0,25 statt 1,5 sinkt es bei Lücke 0,2 und T = 2 000 von 223,4 auf 49,8 (Standardfall), von 217,1 auf 71,1 (Experiment 1) und von 212,4 auf 77,9 (Experiment 5)."),
 )
 
 COLOR_BAR = "#2F6B65"
@@ -69,7 +69,7 @@ PRESET_HELP = {
     "Standardfall (Voreinstellung)": "Wald mit 10 Leitungen (Seed 3): Der gezogene Test findet in 311 Orakelaufrufen kein Gegenbeispiel, die vollständige Prüfung (1 024 Aufrufe) bestätigt das Matroid. Greedy erreicht 108, das Optimum.",
     "Regenbogen-Wald": "Wald und lauter verschiedene Kabelfarben (Seed 10): Gegenbeispiel nach 23 Aufrufen, kein Matroid. Greedy erreicht 62 von 66 (0,939). Die Zerlegung in zwei Matroide ist bekannt: Schnittverfahren (Stück 7 und 8).",
     "Zuordnung": "Jeder obere und jeder untere Anschluss höchstens einmal (Seed 7): Gegenbeispiel nach 153 Aufrufen, kein Matroid. Greedy erreicht 44 von 51 (0,863). Zwei Partitionsmatroide: Schnittverfahren.",
-    "Konflikte": "Leitungspaare, die nicht zusammen gehen (Seed 11): Gegenbeispiel nach 252 Aufrufen. Greedy erreicht 98 von 133 (0,737). Keine Zerlegung in zwei Matroide: Näherung oder ganzzahliges Programm.",
-    "Budget": "Gesamtgröße höchstens ein Drittel (Seed 3): Gegenbeispiel nach 272 Aufrufen. Greedy erreicht nur 51 von 92 (0,554), der schlechteste Fall dieser Reihe.",
+    "Konflikte": "Leitungspaare, die nicht zusammen gehen (Seed 11): Gegenbeispiel nach 252 Aufrufen. Greedy erreicht 98 von 133 (0,737). Keine bekannte Zerlegung in zwei Matroide (Konfliktgraph, nicht geprüft): Näherung oder ganzzahliges Programm.",
+    "Budget": "Gesamtgröße höchstens ein Drittel (Seed 3): Gegenbeispiel nach 272 Aufrufen. Greedy erreicht nur 51 von 92 (0,554), ein schlechter Fall dieser Familie (in der Messreihe liegt der kleinste Quotient bei 0,612, in anderen Ziehungen darunter).",
     "Stiller Fehler": "Dieselbe Zuordnung wie oben, aber Seed 5: Der Test findet bei Budget 300 in 319 Aufrufen nichts und lässt die Familie als Matroid durch. Sie ist keins; Greedy erreicht 81 von 106 (0,764). Mit Budget 1 000 findet er das Gegenbeispiel nach 652 Aufrufen.",
 }

@@ -83,7 +83,7 @@ with st.container(key="kopf"):
     st.title("🧭 Verfahrenswahl für Matroid-Probleme – welches Verfahren wann")
 st.markdown(
     """
-Die Stücke davor haben ein Dutzend Verfahren gezeigt: **Greedy**, **Schnitt** und **Vereinigung** von Matroiden, **lokale Suche** und **Streaming**, **Sekretärregel** und **Bandit**, **Minimum-Norm-Punkt**. Hier die Frage, die man in der Praxis zuerst stellt: **Welches davon passt zu meinem Problem, und was kostet es, das herauszufinden?** Neu ist kein Rechenverfahren, gemessen wird die **Entscheidung** selbst. Zwei Fragen lassen sich am Orakel prüfen (**Ist die Familie ein Matroid? Ist die Zielfunktion submodular?**), drei nicht (**Schnitt, online, lernend**): Das sind Eigenschaften der Aufgabe. Gegenbeispiele findet ein Test billig, die **Bestätigung** kostet alle 2^n Mengen, und was der Test durchlässt, kostet Greedy Wert.
+Die Stücke davor haben ein Dutzend Verfahren gezeigt: **Greedy**, **Schnitt** und **Vereinigung** von Matroiden, **lokale Suche** und **Streaming**, **Sekretärregel** und **Bandit**, **Minimum-Norm-Punkt**. Hier die Frage, die man in der Praxis zuerst stellt: **Welches davon passt zu meinem Problem, und was kostet es, das herauszufinden?** Neu ist kein Rechenverfahren, gemessen wird die **Entscheidung** selbst. Zwei Fragen lassen sich am Orakel prüfen (**Ist die Familie ein Matroid? Ist die Zielfunktion submodular?**), drei nicht (**Schnitt, online, lernend**): Das sind Eigenschaften der Aufgabe. Gegenbeispiele findet ein Test billig, die **vollständige Prüfung** der Demo kostet alle 2^n Mengen, und was der Test durchlässt, kostet Greedy Wert.
 
 Dies ist das **siebzehnte und letzte Stück** der Reihe „Matroide und Submodularität“. Weiter unten: fünf Experimente (🔬), eine **Spielwiese „Sie ziehen die Mengen“**, **🚧 Wo die Annahmen enden** und der Expander **📐 Mathematische Formulierung**.
 """
@@ -250,7 +250,7 @@ st.markdown(
 | **Das Optimum steht für das Schnittverfahren** | Bei erkannten Nicht-Matroiden mit Zerlegung gilt hier der Aufzählungswert als „Wert des Schnittverfahrens“; dass das Verfahren aus Stück 7 und 8 ihn polynomiell erreicht, ist dort gemessen, hier nicht gegengeprüft. **(Stück 7 und 8)** |
 | **Die Zerlegung wird mitgeliefert** | Der Test sagt nur „kein Matroid“. Ob sich eine Zerlegung in zwei Matroide aus dem Orakel finden lässt, ist nicht untersucht. **(nicht gemessen)** |
 | **Online und lernend sind Wissen** | Die Informationslage wird angegeben, nicht geprüft; die Zahlen aus Stück 13 und 14 sind dort gemessen und hier nur zitiert. **(Stück 13 und 14)** |
-| **Gezogene Tests beweisen nichts** | Kein Gegenbeispiel in B Aufrufen heißt nicht „Matroid“: Experiment 2 zeigt durchgelassene Nicht-Matroide. Bestätigen kann man nur vollständig (2^n Aufrufe). **(Experiment 2)** |
+| **Gezogene Tests beweisen nichts** | Kein Gegenbeispiel in B Aufrufen heißt nicht „Matroid“: Experiment 2 zeigt durchgelassene Nicht-Matroide. Die vollständige Prüfung der Demo kostet 2^n Aufrufe; ob es mit weniger geht, ist nicht untersucht. **(Experiment 2)** |
 | **Submodularität nur an einer Abdeckung gemessen** | Der Test auf abnehmenden Zusatznutzen läuft auf Abdeckungen, Budgetdeckeln, Quadraten und Zufallstabellen; schwache Verletzungen brauchen viele Aufrufe. **(Experiment 4)** |
 | **Härte nicht gemessen** | Dass viele dieser Probleme NP-schwer sind, steht in der Literatur und ist hier **nicht** nachgeschlagen und nicht gemessen. **(Literatur, nicht geprüft)** |
 | **Beispiele zufällig und klein** | Alle Aussagen gelten für die gezogenen Instanzen mit festen Seeds. **(nicht allgemein)** |
@@ -270,7 +270,7 @@ with st.expander("📐 Mathematische Formulierung"):
 
 **Submodularität.** $f$ ist submodular genau dann, wenn $f(A + e) + f(A + g) \ge f(A + e + g) + f(A)$ für alle $A$ und $e, g \notin A$. Der gezogene Test prüft vier Aufrufe je Ziehung $(A, e, g)$.
 
-**Garantien aus der Reihe** (dort gemessen, hier zitiert): Greedy ist bei einem Matroid für jede Gewichtung optimal (Stück 5); beim Schnitt zweier Matroide erreicht jede maximale gemeinsame Menge mindestens die Hälfte (Stück 7); bei monotoner submodularer Zielfunktion erreicht Greedy $1 - 1/e$ unter einer Kardinalitätsschranke und $1/2$ unter einer Matroidschranke (Stück 11).
+**Garantien aus der Reihe** (dort gemessen, hier zitiert): Greedy ist bei einem Matroid für jede Gewichtung optimal (Stück 5); beim Schnitt zweier Matroide erreicht Greedy nach Gewicht mindestens die Hälfte des Optimums (jede maximale gemeinsame Menge hat mindestens die halbe Mächtigkeit des Maximums; Stück 7); bei monotoner submodularer Zielfunktion erreicht Greedy $1 - 1/e$ unter einer Kardinalitätsschranke und $1/2$ unter einer Matroidschranke (Stück 11).
 
 **Literatur.** Matroid-Axiome, Greedy-Charakterisierung (Rado, Edmonds), Schnitt und Vereinigung (Edmonds) sind Lehrbuchwissen. Aussagen zur Härte sind nicht nachgeschlagen. Gemessen, nicht zitiert, sind hier die Prüfkosten, die stillen Fehler und die Verluste der Regel.
         """

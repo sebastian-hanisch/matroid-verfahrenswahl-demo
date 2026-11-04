@@ -259,7 +259,7 @@ def verdict_ex1(res) -> tuple[str, str]:
     both = sum(r["none"] for r in rows)
     full = res["full"]
     return "info", (f"Ein Gegenbeispiel zum Matroid findet der Größentest im Median nach **{_range_text(sm)}** Orakelaufrufen, der Austauschtest nach **{_range_text(em)}** (n = {rows[0]['n']} bis {rows[-1]['n']}, "
-                    f"{count} Instanzen je Familie und n, Deckel {zahl(C.E_SKALA_CAP)} Aufrufe). Beide Tests zusammen ließen **{both}** von {zahl(len(rows) * count)} Instanzen unentdeckt (darunter können zufällige Matroide sein). "
+                    f"{count} Instanzen je Familie und n, Deckel {zahl(C.E_SKALA_CAP)} Aufrufe). Beide Tests zusammen ließen **{both}** von {zahl(len(rows) * count)} Instanzen unentdeckt (darunter können zufällige Matroide sein; in der Messreihe der README sind es alle). "
                     f"Die Bestätigung gibt es nur vollständig: 2^n Aufrufe, das sind **{zahl(full[10])}** bei n = 10, **{zahl(full[20])}** bei n = 20 und **{zahl(full[30])}** bei n = 30; Greedy selbst braucht n.")
 
 
@@ -404,9 +404,9 @@ def verdict_ex4(res) -> tuple[str, str]:
         return "error", "Widerspruch in der Messreihe: eine submodulare Zielfunktion wurde als verletzt gemeldet."
     ep, pb, qd, zf = by["einpaar"], by["paarbonus"], by["quadrat"], by["zufall"]
     b = C.E_SUB_BUDGETS
-    return "info", (f"Der Test auf Submodularität ist billiger als der auf das Matroid: Eine Abdeckung mit Paarbonus fällt im Mittel nach **{num(round(pb['avg'], 1))}** Aufrufen auf, das Quadrat der Größe nach **{num(round(qd['avg'], 1))}**, "
+    return "info", (f"Bei diesen Funktionen ist der Test auf Submodularität billiger als der auf das Matroid: Eine Abdeckung mit Paarbonus fällt im Mittel nach **{num(round(pb['avg'], 1))}** Aufrufen auf, das Quadrat der Größe nach **{num(round(qd['avg'], 1))}**, "
                     f"eine Zufallstabelle nach **{num(round(zf['avg'], 1))}**. Ein einziges Paar mit Bonus 1 braucht **{ep['cells'][b[3]]} von {ep['violated']}** bei {zahl(b[3])} und **{ep['cells'][b[4]]} von {ep['violated']}** "
-                    f"bei {zahl(b[4])} Aufrufen (Mittel {num(round(ep['avg'], 1))}). Falsch gemeldete submodulare Zielfunktionen: **0**.")
+                    f"bei {zahl(b[4])} Aufrufen (Mittel {num(round(ep['avg'], 1))}): Bei diesem einen schwachen Paar ist er nicht billiger als der Austauschtest. Falsch gemeldete submodulare Zielfunktionen: **0**.")
 
 
 def ex5_series() -> dict:
@@ -442,7 +442,7 @@ def verdict_ex5(res) -> tuple[str, str]:
         return "error", "Widerspruch in der Messreihe."
     others = [r for r in res["rows"] if r["kind"] in C.NON_MATROID_KINDS]
     return "info", (f"Bei allen fünf Matroid-Familien erreicht Greedy das Optimum (**{res['count']} von {res['count']}** je Familie). Bei den fünf anderen liegt der kleinste Quotient zwischen **{quot(min(r['min'] for r in others))}** und "
-                    f"**{quot(max(r['min'] for r in others))}**; bei den beiden Schnitten zweier Matroide nie unter **{quot(res['inter_min'])}**, also über der Schranke ½ aus Stück 7. Aus jedem der **{res['cert_total']}** gefundenen "
+                    f"**{quot(max(r['min'] for r in others))}**; bei den beiden Schnitten zweier Matroide in dieser Stichprobe nicht unter **{quot(res['inter_min'])}**, also über der bewiesenen Schranke ½ aus Stück 7 (größere Stichproben reichen tiefer). Aus jedem der **{res['cert_total']}** gefundenen "
                     f"Gegenbeispiele (B = {zahl(C.CERT_BUDGET)}) entstehen Gewichte, bei denen Greedy scheitert: **{res['cert_ok']} von {res['cert_total']}**.")
 
 
