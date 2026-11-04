@@ -1,7 +1,6 @@
 # Verfahrenswahl für Matroid-Probleme – welches Verfahren wann – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-matroid-verfahrenswahl-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-matroid-verfahrenswahl-demo.streamlit.app/)**
 
 Siebzehntes und letztes Stück der Reihe **Matroide und Submodularität** (Bereich Kombinatorik) in der „Konzepte“-Reihe für die Website „Sebastian Hanisch – Operations Research und Machine Learning“. Die Stücke davor haben ein Dutzend Verfahren gezeigt: **Greedy**, **Schnitt** und **Vereinigung** von Matroiden, **lokale Suche** und **Streaming**, **Sekretärregel** und **Bandit**, **Minimum-Norm-Punkt**. Hier die Frage, die man in der Praxis zuerst stellt: **Welches davon passt zu meinem Problem, und was kostet es, das herauszufinden?** Neu ist kein Rechenverfahren; gemessen wird die **Entscheidung** selbst. Zwei Fragen lassen sich am Orakel prüfen (**Ist die Familie ein Matroid? Ist die Zielfunktion submodular?**), drei nicht (**Schnitt, online, lernend**).
 
